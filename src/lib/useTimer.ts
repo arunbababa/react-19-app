@@ -7,14 +7,14 @@ const useTimer = (): UseTimer => {
   const [isActive, setIsActive] = useState(false);
 
   useEffect(() => {
-    let interval: NodeJS.Timeout; // ここに置くことでif, else if の２つのブロックで共有して利用できる
-    if (isActive) {
-      interval = setTimeout(() => {
-        setTime((prev) => prev + 1);
-      }, 1000);
-    }
-    return () => clearInterval(interval); // ちなみにこれは依存配列が変わってuseEffectが再実行される前に毎回必ず走る→一秒ごとにintervalをなくし、新しいものを生成している(なおsetTimeoutの1秒後に走ってからuseEffectは走るのでしっかりと毎回変更される部分はご心配なく)
-  }, [time, isActive]);
+    if (!isActive) return;
+
+    const interval = setInterval(() => {
+      setTime((prev) => prev + 1);
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [isActive]);
 
   const handleClickToggle = () => {
     setIsActive((prev) => !prev);
