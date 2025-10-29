@@ -4,9 +4,8 @@
 // ＵＩはよしなに
 
 import { NextPage } from 'next';
-import { useEffect, useState } from 'react';
 
-import Button from '@/components/common/parts/Button';
+import StarWars from '@/components/StarWars';
 
 type PersonData = {
   name: string; // 名前
@@ -16,49 +15,7 @@ type PersonData = {
 };
 
 const Page: NextPage = () => {
-  const [personData, setPersonData] = useState<PersonData | null>(null);
-  const [randomId, setRandomId] = useState(1);
-
-  const handleSubmit = () => {
-    setRandomId(() => {
-      const randomNum = Math.floor((Math.random() + 1) * 9);
-      return randomNum;
-    });
-  };
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await fetch(`https://swapi.dev/api/people/${randomId}/`);
-        const result = (await res.json()) as PersonData;
-        console.log(result); // テスト
-
-        setPersonData(result);
-      } catch (e) {
-        console.log(e);
-      }
-    };
-    void fetchData();
-  }, [randomId]);
-  return (
-    <div className="mx-auto mt-5 max-w-5">
-      <div className="flex justify-center">
-        <div>
-          {/* 一旦配列ではないオブジェクトの体で一つずつレンダーする */}
-          {personData ? (
-            <>
-              <p>{personData.name}</p>
-              <p>{personData.height}</p>
-              <p>{personData.mass}</p>
-              <p>{personData.hair_color}</p>
-            </>
-          ) : (
-            <p>loading...</p>
-          )}
-          <Button label="送信" variant="primary" onClick={handleSubmit} />
-        </div>
-      </div>
-    </div>
-  );
+  return <StarWars />;
 };
 
 export default Page;
