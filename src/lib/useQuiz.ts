@@ -12,7 +12,7 @@ const CHOICES = [
 const useQuiz = (): Quiz => {
   const [userChoice, setUserChoice] = useState('');
   const [isUserChoiceIsAnswer, setIsUserChoiceIsAnswer] = useState(false);
-  const handleUserChoice = (CHOICE: { string: boolean }) => {
+  const handleUserChoice = (CHOICE: Record<string, boolean>) => {
     const userChoiceKeyDetail = Object.keys(CHOICE)[0];
     const isUserChoiceIsAnswer = Object.values(CHOICE)[0];
     setUserChoice(userChoiceKeyDetail);
